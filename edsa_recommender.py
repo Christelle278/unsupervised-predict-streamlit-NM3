@@ -25,7 +25,6 @@
 	https://docs.streamlit.io/en/latest/
 
 """
-from urllib import response
 import streamlit as st
 
 # Data handling dependencies
