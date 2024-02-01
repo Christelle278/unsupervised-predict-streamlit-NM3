@@ -25,6 +25,7 @@
 	https://docs.streamlit.io/en/latest/
 
 """
+from urllib import response
 import streamlit as st
 
 # Data handling dependencies
@@ -195,7 +196,9 @@ def main():
             with st.expander("**Advantages/Disadvantages**"):
                 st.write('''**Advantages:**''')
                 st.write('''1. Personalization: Content-based filtering excels at providing personalized recommendations based on an individual user's preferences. By analyzing the attributes of items a user has interacted with or liked, the system can recommend similar items that align with the user's unique tastes and interests.''')
-                st.write('''2. Reduced Dependency on User History: Content-based filtering is less reliant on extensive user history or collaborative data. This makes it particularly useful for new users or in scenarios where limited historical data is available. The system can start making relevant recommendations based on the intrinsic features of items.''')
+                st.write('''2. Transparency: Watchwiz recommendations are based on the characteristics of items, this makes it easier to explain to users why certain items are recommended to them thereby enhancing the transparency and trust of the app.''')
+                st.write('''3. Stability:Recommendations on Watchwiz remains stable overtime as they are based on inherent item characteristics rather than changing user behavior or external factors.''')
+                st.write('''4. Reduced Dependency on User History: Content-based filtering is less reliant on extensive user history or collaborative data. This makes it particularly useful for new users or in scenarios where limited historical data is available. The system can start making relevant recommendations based on the intrinsic features of items.''')
                 st.divider()
                 st.write('''**Disadvantages:**''')
                 st.write('''1. Limited Diversity in Recommendations: One limitation of content-based filtering is that it tends to recommend items that are similar to those a user has already interacted with. This can result in a lack of diversity in recommendations, potentially leading to a "filter bubble" where users are not exposed to a broad range of content.''')
@@ -363,6 +366,29 @@ The significance of this insight may vary between collaborative-based and conten
                     feedback_additional_3 = st.checkbox('Functionality')
                     feedback_additional_4 = st.checkbox('Other')
             submit_feedback = st.form_submit_button("Submit Feedback")
+
+            
+            st.title("Echo bot")
+            st.write("Need some help?")
+            if "messages" not in st.session_state:
+                st.session_state.messages = []
+
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.markdown(message["content"])
+
+            if prompt := st.chat_input("what's up?"):
+                with st.chat_message("user"):
+                    st.markdown(prompt)
+
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                response = f"Echo: {prompt}"
+                with st.chat_message("assistant"):
+                    st.markdown(response)
+                st.session_state.messages.append({"role": "assistant", "content": response})
+                
+
+
 
 
 print('Done')
