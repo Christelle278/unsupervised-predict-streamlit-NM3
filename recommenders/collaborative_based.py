@@ -48,9 +48,7 @@ ratings_df = pd.read_csv('resources/data/train.csv')
 ratings_df.drop(['timestamp'], axis=1,inplace=True)
 
 # We make use of an SVD model trained on a subset of the MovieLens 10k dataset.
-model1=pickle.load(open('resources/models/SVD.pkl', 'rb'))
-model2=pickle.load(open('resources/models/NMF.pkl', 'rb'))
-model3=pickle.load(open('resources/models/CoCluster.pkl', 'rb'))
+model=pickle.load(open('resources/models/SVD.pkl', 'rb'))
 
 
 def prediction_item(item_id):
@@ -72,16 +70,6 @@ def prediction_item(item_id):
     reader = Reader(rating_scale=(0, 5))
     load_df = Dataset.load_from_df(ratings_df,reader)
     a_train = load_df.build_full_trainset()
-    
-    if st.session_state.model == 'SVD':
-        model = model1
-        print('1')
-    elif st.session_state.model == 'NMF':
-        model = model2
-        print('2')
-    else:
-        model = model3
-        print('3')
 
     predictions = []
     for ui in a_train.all_users():
