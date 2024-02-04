@@ -47,7 +47,7 @@ ratings_df = pd.read_csv('resources/data/train.csv')
 # ratings_df = pd.read_csv('train.csv')
 ratings_df.drop(['timestamp'], axis=1,inplace=True)
 
-# We make use of an SVD model trained on a subset of the MovieLens 10k dataset.
+# We make use of an SVD.
 model=pickle.load(open('resources/models/SVD.pkl', 'rb'))
 
 
@@ -76,6 +76,8 @@ def prediction_item(item_id):
         predictions.append(model.predict(iid=item_id,uid=ui, verbose = False))
     return predictions
 
+print('prediction_item done')
+
 def pred_movies(movie_list):
     """Maps the given favourite movies selected within the app to corresponding
     users within the MovieLens dataset.
@@ -103,6 +105,8 @@ def pred_movies(movie_list):
             id_store.append(pred.uid)
     # Return a list of user id's
     return id_store
+
+print('pred_movies done')
 
 # !! DO NOT CHANGE THIS FUNCTION SIGNATURE !!
 # You are, however, encouraged to change its content.  
@@ -136,6 +140,9 @@ def collab_model(movie_list,top_n=10):
     idx_2 = indices[indices == movie_list[1]].index[0]
     idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
+
+    print(type(idx_1))
+    
     rank_1 = cosine_sim[idx_1]
     rank_2 = cosine_sim[idx_2]
     rank_3 = cosine_sim[idx_3]
