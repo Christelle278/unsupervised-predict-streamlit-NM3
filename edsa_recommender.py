@@ -98,6 +98,7 @@ def add_bg_from_local(image_file):
 
 # App declaration
 def main():
+    st.sidebar.image("resources/imgs/S.jpeg")
     page_options = ["Recommender System","Project Overview", "About Us", "Data Analytics", "Model Explanation", "App Feedback"]
     # DO NOT REMOVE the 'Recommender System' option below, however,
     # you are welcome to add more options to enrich your app.
@@ -162,7 +163,7 @@ def main():
     # You may want to add more sections here for aspects such as an EDA,
     # or to provide your business pitch.
     
-        st.image('resources/imgs/Logo.png')
+        st.image('resources/imgs/S.jpeg')
         st.header('Problem Statement')
         st. write('''In the ever-expanding digital landscape of the entertainment industry, the relevance of recommender systems has become pivotal for ensuring individuals receive tailored content recommendations. Future Forge Software, a visionary company in the entertainment domain, aspires to develop a cutting-edge movie recommender system leveraging advanced analytics and predictive modeling. The challenge at hand involves constructing an algorithm, rooted in content or collaborative filtering, capable of accurately predicting user movie ratings for titles they have not yet viewed, based on their historical preferences.''')
           
@@ -220,8 +221,23 @@ def main():
     # or to provide your business pitch.
     
     if page_selection == "About Us":
+        st.title("About Us")
+        st.image('resources/imgs/Logo.png')
         st.markdown("<div style='background-color: rgba(246, 246, 246, 1); padding: 20px; margin: 0px 0px 25px 0px; border-radius: 10px; text-align:justify'><p>At Future Forge Software, we stand at the forefront of technological evolution, dedicated to shaping the future of software solutions with a specific focus on the entertainment market. As a trailblazing force in the digital landscape, we specialize in harnessing the power of advanced analytics and predictive modeling within the dynamic realm of entertainment.<br><br> Our commitment revolves around developing cutting-edge software that empowers businesses in the entertainment industry to foresee opportunities, mitigate risks, and achieve unprecedented success. With a keen focus on the unique challenges and opportunities within the entertainment market, we tailor our solutions to meet the ever-evolving needs of this dynamic sector.<br><br>As we aspire to seamlessly integrate predictive analytics into every facet of decision-making in the entertainment industry, our vision is to be the driving force behind a world where foresight transforms content curation, user experiences, and industry standards. Join us on this journey of innovation and discovery as we navigate the digital landscape with a commitment to excellence, innovation, and the transformative potential of predictive analytics. Welcome to Future Forge Software, where the future of entertainment is not just a destination; it's a creation. </div>", unsafe_allow_html=True)
         
+        
+        st.write("<div style='background-color: transparent; margin: 40px 0 20px 0'><h2 style='text-align:center'>Mission</h2></div>", unsafe_allow_html=True)
+        st.markdown(''' To harness the power of advanced analytics and predictive modeling, 
+we are committed to developing cutting-edge software solutions that enable businesses 
+to foresee opportunities, mitigate risks, and achieve unprecedented success in an 
+ever-evolving digital landscape.''')
+        
+        st.write("<div style='background-color: transparent; margin: 40px 0 20px 0'><h2 style='text-align:center'>Vision</h2></div>", unsafe_allow_html=True)
+        st.markdown(''' Aspire to be the driving force behind a world where predictive 
+analytics seamlessly integrates into every facet of decision-making. We envision our 
+software empowering organizations globally, propelling them towards sustained growth, 
+and transforming industries through the foresight of accurate predictions.''')
+
         st.markdown("<div style='background-color: transparent; margin: 40px 0 20px 0'><h2 style='text-align:center'>Meet Our Team</h2></div>", unsafe_allow_html=True)
         col_team_1, col_team_2, col_team_3= st.columns(3)
         with col_team_1:
@@ -232,7 +248,7 @@ def main():
             st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Amanda Sibanda</b><br>Project Manager - Data Analyst</p></div>", unsafe_allow_html=True)
         with col_team_3:
             st.markdown(img_to_html('resources/imgs/Oluwakemi.jpeg'), unsafe_allow_html=True)
-            st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Oluwakemi</b><br>Data Analyst</p></div>", unsafe_allow_html=True)
+            st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Oluwakemi Oluwadare</b><br>Data Analyst</p></div>", unsafe_allow_html=True)
             
         col_team_4, col_team_5, col_team_6, = st.columns(3)
         with col_team_4:
@@ -243,8 +259,22 @@ def main():
             st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Victoria Chukwuno Chinenye</b><br>App Programmer</p></div>", unsafe_allow_html=True)
         with col_team_6:
             st.markdown(img_to_html('resources/imgs/Janet.png'), unsafe_allow_html=True)
-            st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Janet</b><br>App Designer</p></div>", unsafe_allow_html=True)
-        
+            st.markdown("<div style='background-color: transparent; margin-top: 10px'><p style='text-align:center'><b>Janet Adeoye</b><br>App Designer</p></div>", unsafe_allow_html=True)
+
+        st.write("<div style='background-color: transparent; margin: 40px 0 20px 0'><h2 style='text-align:center'>Why Future Forge</h2></div>", unsafe_allow_html=True)
+        st.markdown(''' **Innovation:** We thrive on pushing the boundaries of what's possible, 
+constantly exploring new frontiers in predictive technology.
+
+**Reliability:** Our software solutions are built on robust frameworks,
+ensuring reliability and accuracy in every prediction.
+
+**Customization:** Recognizing the unique needs of each business, 
+we tailor our solutions to fit seamlessly into your workflow, providing personalized 
+insights.
+
+**Collaboration:** We believe in working hand-in-hand with our clients, 
+fostering a collaborative approach that ensures our solutions align perfectly with 
+your objectives ''')        
 
     if page_selection == "Data Analytics":
         st.title("Data Analytics")
@@ -309,60 +339,50 @@ The significance of this insight may vary between collaborative-based and conten
             st.write('''Notably, when examining the top 25 rated actors, it's evident that there are not many widely recognized household names. This underscores the extensive diversity of movies within the database. This information is crucial for our model, emphasizing the need to account for a broad spectrum of actors, genres, and lesser-known but highly rated performers in order to provide more comprehensive and inclusive movie recommendations to users with diverse preferences.''')
 
     if page_selection == "Model Explanation":
-        st.title('SVC++')
-        st.write('''Singular Value Decomposition (SVD++) is like a magical movie recommendation system. Imagine a giant spreadsheet with everyone's movie preferences. SVD++ breaks this down into three smaller sheets: one for people's tastes, one for movie characteristics, and one for individual preferences. Using this recipe, it predicts what movies someone might like based on similar tastes, movie traits, and personal preferences. It's a clever way of suggesting new movies even before you've seen them, like having a movie wizard tailor recommendations just for you!''')
+        st.title('SVC')
+        st.write('''Singular Value Decomposition (SVD) is a mathematical technique used in various fields, including recommendation systems like collaborative filtering for movie recommendations. Let's break it down in a non-technical way:
+
+Imagine you have a huge table of information that represents how different users have rated various movies. Rows in this table are users, columns are movies, and the numbers are the ratings. But here's the catch: not all users have rated all movies; there are gaps in the table.
+
+Now, SVD helps us fill in those gaps and understand the underlying patterns in the data. It breaks down the original table into three simpler tables:
+
+User Matrix: Describes how much each user likes certain "features" in movies. These features could be things like action, romance, comedy, etc.
+
+Feature Matrix: Describes how much of each feature is present in each movie.
+
+Weight Matrix: Contains the importance of each feature for each user.
+
+By multiplying these three matrices together, we can approximate the original table and fill in the missing ratings. It's like saying, "Okay, based on what we know about users' preferences for certain features and the features present in movies, we can make an educated guess about how a user would rate a movie they haven't seen."
+
+So, SVD helps in understanding the hidden patterns and relationships between users and movies, allowing recommendation systems to predict how much a user might like a movie they haven't watched yet. It's a way of making educated guesses to improve the personalized recommendations provided to users.''')
 
     if page_selection == "App Feedback":
         st.title("App Feedback")
         st.write("We appreciate your valuable feedback on our app! Your insights and suggestions are crucial in helping us improve and provide you with an exceptional user experience. Please take a few moments to share your thoughts by completing this feedback form. Your input will assist us in understanding what aspects of the app are working well and where we can make enhancements or address any issues you may have encountered.")
         
-        with st.form("feedback_form"):
-            c_feedback = st.container()
+    # User Information Section
+        st.write("## User Information")
+        name = st.text_input("Your Full Name:")
+        email = st.text_input("Your Email Address:")
+        phone_number = st.text_input("Your Phone Number:")
 
-            with c_feedback:
-                col_feedback_1, col_feedback_2 = st.columns(2)
-                with col_feedback_1:
-                    feedback_name = st.text_input(
-                        "Name",
-                        placeholder='Enter',
-                    )
-                with col_feedback_2:
-                    feedback_email = st.text_input(
-                        "Email",
-                        placeholder='Enter',
-                    )
-                col_feedback_3, col_feedback_4 = st.columns(2)
-                with col_feedback_3:
-                    feedback_type = st.selectbox(
-                    'Category',
-                    ('Defect', 'Bug', 'Feature'))
-                with col_feedback_4:
-                    feedback_subject = st.text_input(
-                        "Subject",
-                        placeholder='Enter',
-                    )
-                col_feedback_5, col_feedback_6 = st.columns(2)
-                with col_feedback_5:
-                    feedback_description = st.text_area('Description', '''''', height=400)
-                with col_feedback_6:
-                    tab_low, tab_medium, tab_high = st.tabs(["Low", "Medium", "High"])
-                    with tab_low:
-                        feedback_priority = 0
-                    with tab_medium:
-                        feedback_priority = 1
-                    with tab_high:
-                        feedback_priority = 2
+    # Feedback Section
+        st.write("## Feedback")
+        overall_experience = st.selectbox(
+        "How would you rate your overall experience with the app?",
+        ["Excellent", "Good", "Average", "Poor"]
+    )
 
-                    feedback_satisfaction = st.radio(
-                    "Satisfaction",
-                    ('Very Satisfied', 'Satisfied', 'Neutral', 'Dissatisfied'))
+        specific_feedback = st.text_area("Share specific feedback or suggestions:")
 
-                    st.write('Additional Features')
-                    feedback_additional_1 = st.checkbox('UI/UX')
-                    feedback_additional_2 = st.checkbox('Performance')
-                    feedback_additional_3 = st.checkbox('Functionality')
-                    feedback_additional_4 = st.checkbox('Other')
-            submit_feedback = st.form_submit_button("Submit Feedback")
+    # Bug Report Section
+        st.write("## Bug Report (if any)")
+        bug_description = st.text_area("Describe the issue or bug you encountered:")
+
+    # Submit Button
+        if st.button("Submit Feedback"):
+        # You can add code here to save the feedback to a database or file
+            st.success("Feedback submitted successfully! Thank you for your input.")
 
 print('Done')
 
