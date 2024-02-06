@@ -132,18 +132,22 @@ def collab_model(movie_list,top_n=10):
     print(f'init users {df_init_users}')
 
     # Getting the cosine similarity matrix
-    # Pivot ratings_df to create a user-movie rating matrix
-    user_movie_matrix = ratings_df.pivot(index='userId', columns='movieId', values='rating').fillna(0)
-
-    # Calculate cosine similarity
-    cosine_sim = cosine_similarity(user_movie_matrix, user_movie_matrix)
+    cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
 
     
     print(f'cosine sim {cosine_sim}')
 
-    idx_1 = indices[indices == movie_list[0]].index[0]
-    idx_2 = indices[indices == movie_list[1]].index[0]
-    idx_3 = indices[indices == movie_list[2]].index[0]
+    idx_1 = indices[indices == movie_list[0]].index
+    idx_2 = indices[indices == movie_list[1]].index
+    idx_3 = indices[indices == movie_list[2]].index
+
+    if len(idx_1) == 0 or len(idx_2) == 0 or len(idx_3) == 0:
+        print("One or more movie titles not found in dataset.")
+        return []
+    else:
+        idx_1 = idx_1[0]
+        idx_2 = idx_2[0]
+        idx_3 = idx_3[0]
     # Creating a Series with the similarity scores in descending order
 
     print(f'idx 1 {idx_1}')
