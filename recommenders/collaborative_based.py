@@ -26,8 +26,6 @@
     filtering algorithm for rating predictions on Movie data.
 
 """
-# Streamlit dependencies
-import streamlit as st
 
 # Script dependencies
 import pandas as pd
@@ -38,18 +36,30 @@ from surprise import Reader, Dataset
 from surprise import SVD, NormalPredictor, BaselineOnly, KNNBasic, NMF
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+import requests
 
 # Importing data
 movies_df = pd.read_csv('resources/data/movies.csv',sep = ',')
 ratings_df = pd.read_csv('resources/data/ratings.csv')
-
-# movies_df = pd.read_csv('movies.csv',sep = ',')
-# ratings_df = pd.read_csv('train.csv')
 ratings_df.drop(['timestamp'], axis=1,inplace=True)
 
-# We make use of an SVD.
-model=pickle.load(open('resources/models/SVD.pkl', 'rb'))
+# Function to download the file from Google Drive
+def download_file_from_google_drive(url, destination):
+    response = requests.get(url)
+    with open(destination, "wb") as f:
+        f.write(response.content)
 
+# Google Drive direct download link
+google_drive_link = "https://drive.google.com/file/d/1o8Ue0BNirQlxBmTW-QPTx-dWhxAjv54Y/uc?export=download&id=1o8Ue0BNirQlxBmTW-QPTx-dWhxAjv54Y"
+
+# Destination path to save the downloaded file
+destination_path = "SVD2.pkl"
+
+# Download the file from Google Drive
+download_file_from_google_drive(google_drive_link, destination_path)
+
+# We make use of an SVD model trained on a subset of the MovieLens 10k dataset.
+model=pickle.load(open('SVD2.pkl', 'rb'))
 
 def prediction_item(item_id):
     """Map a given favourite movie to users within the
@@ -70,13 +80,11 @@ def prediction_item(item_id):
     reader = Reader(rating_scale=(0, 5))
     load_df = Dataset.load_from_df(ratings_df,reader)
     a_train = load_df.build_full_trainset()
-    
+
     predictions = []
     for ui in a_train.all_users():
         predictions.append(model.predict(iid=item_id,uid=ui, verbose = False))
     return predictions
-
-print('prediction_item done')
 
 def pred_movies(movie_list):
     """Maps the given favourite movies selected within the app to corresponding
@@ -94,19 +102,17 @@ def pred_movies(movie_list):
 
     """
     # Store the id of users
-    id_store=[]
+    id_store = set()  # Use a set to ensure unique user IDs
     # For each movie selected by a user of the app,
-    # predict a corresponding user within the dataset with the highest rating
-    for i in movie_list:
-        predictions = prediction_item(item_id = i)
+    # predict corresponding users within the dataset with the highest ratings
+    for movie_id in movie_list:
+        predictions = prediction_item(item_id=movie_id)
         predictions.sort(key=lambda x: x.est, reverse=True)
-        # Take the top 10 user id's from each movie with highest rankings
+        # Take the top 10 user IDs from each movie with highest rankings
         for pred in predictions[:10]:
-            id_store.append(pred.uid)
-    # Return a list of user id's
-    return id_store
-
-print('pred_movies done')
+            id_store.add(pred.uid)
+    # Return a list of unique user IDs
+    return list(id_store)
 
 # !! DO NOT CHANGE THIS FUNCTION SIGNATURE !!
 # You are, however, encouraged to change its content.  
@@ -144,6 +150,11 @@ def collab_model(movie_list,top_n=10):
     # Getting the cosine similarity matrix
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
 
+    # Filter movie_list to include only movies present in movies_df['title']
+    movie_list = [movie for movie in movie_list if movie in movies_df['title'].values]
+
+    # Filter ratings_df to include only ratings for movies present in movies_df['title']
+    ratings_df = ratings_df[ratings_df['movieId'].isin(movies_df['movieId'])]
     
     print(f'cosine sim {cosine_sim}')
 
@@ -151,6 +162,10 @@ def collab_model(movie_list,top_n=10):
     idx_2 = indices[indices == movie_list[1]].index[0]
     idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
+
+    print("Index of movie_list[0]:", idx_1)
+    print("Index of movie_list[1]:", idx_2)
+    print("Index of movie_list[2]:", idx_3)
 
     print(f'idx 1 {idx_1}')
     print(f'idx 2 {idx_2}')
