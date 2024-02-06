@@ -86,17 +86,17 @@ def pred_movies(movie_list):
 
     """
     # Store the id of users
-    id_store=[]
+    id_store = set()  # Use a set to ensure unique user IDs
     # For each movie selected by a user of the app,
-    # predict a corresponding user within the dataset with the highest rating
-    for i in movie_list:
-        predictions = prediction_item(item_id = i)
+    # predict corresponding users within the dataset with the highest ratings
+    for movie_id in movie_list:
+        predictions = prediction_item(item_id=movie_id)
         predictions.sort(key=lambda x: x.est, reverse=True)
-        # Take the top 10 user id's from each movie with highest rankings
+        # Take the top 10 user IDs from each movie with highest rankings
         for pred in predictions[:10]:
-            id_store.append(pred.uid)
-    # Return a list of user id's
-    return id_store
+            id_store.add(pred.uid)
+    # Return a list of unique user IDs
+    return list(id_store)
 
 # !! DO NOT CHANGE THIS FUNCTION SIGNATURE !!
 # You are, however, encouraged to change its content.  
@@ -137,17 +137,9 @@ def collab_model(movie_list,top_n=10):
     
     print(f'cosine sim {cosine_sim}')
 
-    idx_1 = indices[indices == movie_list[0]].index
-    idx_2 = indices[indices == movie_list[1]].index
-    idx_3 = indices[indices == movie_list[2]].index
-
-    if len(idx_1) == 0 or len(idx_2) == 0 or len(idx_3) == 0:
-        print("One or more movie titles not found in dataset.")
-        return []
-    else:
-        idx_1 = idx_1[0]
-        idx_2 = idx_2[0]
-        idx_3 = idx_3[0]
+    idx_1 = indices[indices == movie_list[0]].index[0]
+    idx_2 = indices[indices == movie_list[1]].index[0]
+    idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
 
     print(f'idx 1 {idx_1}')
