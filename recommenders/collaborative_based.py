@@ -43,23 +43,8 @@ movies_df = pd.read_csv('resources/data/movies.csv',sep = ',')
 ratings_df = pd.read_csv('resources/data/ratings.csv')
 ratings_df.drop(['timestamp'], axis=1,inplace=True)
 
-# Function to download the file from Google Drive
-def download_file_from_google_drive(url, destination):
-    response = requests.get(url)
-    with open(destination, "wb") as f:
-        f.write(response.content)
-
-# Google Drive direct download link
-google_drive_link = "https://drive.google.com/file/d/1o8Ue0BNirQlxBmTW-QPTx-dWhxAjv54Y/uc?export=download&id=1o8Ue0BNirQlxBmTW-QPTx-dWhxAjv54Y"
-
-# Destination path to save the downloaded file
-destination_path = "SVD2.pkl"
-
-# Download the file from Google Drive
-download_file_from_google_drive(google_drive_link, destination_path)
-
 # We make use of an SVD model trained on a subset of the MovieLens 10k dataset.
-model=pickle.load(open('SVD2.pkl', 'rb'))
+model=pickle.load(open('resources/models/SVD.pkl', 'rb'))
 
 def prediction_item(item_id):
     """Map a given favourite movie to users within the
