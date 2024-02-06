@@ -137,6 +137,12 @@ def collab_model(movie_list,top_n=10):
     
     print(f'cosine sim {cosine_sim}')
 
+    print("Indices:", indices)
+    print("Movie List:", movie_list)
+    print("Indices matching movie_list[0]:", indices[indices == movie_list[0]])
+    print("Indices matching movie_list[1]:", indices[indices == movie_list[1]])
+    print("Indices matching movie_list[2]:", indices[indices == movie_list[2]])
+
     idx_1 = indices[indices == movie_list[0]].index[0]
     idx_2 = indices[indices == movie_list[1]].index[0]
     idx_3 = indices[indices == movie_list[2]].index[0]
