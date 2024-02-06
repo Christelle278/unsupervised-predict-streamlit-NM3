@@ -135,18 +135,26 @@ def collab_model(movie_list,top_n=10):
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
 
     
-    print(f'cosine sim {cosine_sim}')
-
-    print("Indices:", indices)
-    print("Movie List:", movie_list)
-    print("Indices matching movie_list[0]:", indices[indices == movie_list[0]])
-    print("Indices matching movie_list[1]:", indices[indices == movie_list[1]])
-    print("Indices matching movie_list[2]:", indices[indices == movie_list[2]])
+    print(f'cosine sim {cosine_sim}'))
 
     idx_1 = indices[indices == movie_list[0]].index[0]
     idx_2 = indices[indices == movie_list[1]].index[0]
     idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
+
+    print("Movie List:", movie_list)
+    print("Movies DataFrame Titles:", movies_df['title'])
+
+    if movie_list[0] not in movies_df['title']:
+        print(f"{movie_list[0]} not found in movies_df['title']")
+    if movie_list[1] not in movies_df['title']:
+        print(f"{movie_list[1]} not found in movies_df['title']")
+    if movie_list[2] not in movies_df['title']:
+        print(f"{movie_list[2]} not found in movies_df['title']")
+
+    print("Index of movie_list[0]:", idx_1)
+    print("Index of movie_list[1]:", idx_2)
+    print("Index of movie_list[2]:", idx_3)
 
     print(f'idx 1 {idx_1}')
     print(f'idx 2 {idx_2}')
