@@ -339,7 +339,7 @@ The significance of this insight may vary between collaborative-based and conten
             st.write('''Notably, when examining the top 25 rated actors, it's evident that there are not many widely recognized household names. This underscores the extensive diversity of movies within the database. This information is crucial for our model, emphasizing the need to account for a broad spectrum of actors, genres, and lesser-known but highly rated performers in order to provide more comprehensive and inclusive movie recommendations to users with diverse preferences.''')
 
     if page_selection == "Model Explanation":
-        st.title('SVC')
+        st.title('SVD')
         st.write('''Singular Value Decomposition (SVD) is a mathematical technique used in various fields, including recommendation systems like collaborative filtering for movie recommendations. Let's break it down in a non-technical way:
 
 Imagine you have a huge table of information that represents how different users have rated various movies. Rows in this table are users, columns are movies, and the numbers are the ratings. But here's the catch: not all users have rated all movies; there are gaps in the table.
