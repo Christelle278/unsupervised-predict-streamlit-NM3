@@ -134,6 +134,11 @@ def collab_model(movie_list,top_n=10):
     # Getting the cosine similarity matrix
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
 
+    # Filter movie_list to include only movies present in movies_df['title']
+    movie_list = [movie for movie in movie_list if movie in movies_df['title'].values]
+
+    # Filter ratings_df to include only ratings for movies present in movies_df['title']
+    ratings_df = ratings_df[ratings_df['movieId'].isin(movies_df['movieId'])]
     
     print(f'cosine sim {cosine_sim}')
 
@@ -141,16 +146,6 @@ def collab_model(movie_list,top_n=10):
     idx_2 = indices[indices == movie_list[1]].index[0]
     idx_3 = indices[indices == movie_list[2]].index[0]
     # Creating a Series with the similarity scores in descending order
-
-    print("Movie List:", movie_list)
-    print("Movies DataFrame Titles:", movies_df['title'])
-
-    if movie_list[0] not in movies_df['title']:
-        print(f"{movie_list[0]} not found in movies_df['title']")
-    if movie_list[1] not in movies_df['title']:
-        print(f"{movie_list[1]} not found in movies_df['title']")
-    if movie_list[2] not in movies_df['title']:
-        print(f"{movie_list[2]} not found in movies_df['title']")
 
     print("Index of movie_list[0]:", idx_1)
     print("Index of movie_list[1]:", idx_2)
