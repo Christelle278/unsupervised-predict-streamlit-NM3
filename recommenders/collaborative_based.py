@@ -135,7 +135,7 @@ def collab_model(movie_list,top_n=10):
     cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
 
     
-    print(f'cosine sim {cosine_sim}'))
+    print(f'cosine sim {cosine_sim}')
 
     idx_1 = indices[indices == movie_list[0]].index[0]
     idx_2 = indices[indices == movie_list[1]].index[0]
