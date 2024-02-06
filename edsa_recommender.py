@@ -187,7 +187,7 @@ def main():
             st.write('**Data-Driven Innovation:**')
             st.write('''As the app collects and analyzes vast amounts of user data over time, it becomes a valuable source of insights into evolving preferences, trends, and behaviors. This data-driven approach allows you to continually enhance and innovate the recommendation algorithm. By staying ahead of user preferences and industry trends, the app becomes a dynamic tool for adapting to changing market demands and maintaining relevance in the long run.''')
 
-        tab1, tab2 = st.tabs(["Content-Based Filtering", "Colaborative-Based Filtering"])
+        tab1, tab2 = st.tabs(["Content-Based Filtering", "Collaborative-Based Filtering"])
 
         with tab1:
             st.header("Content-Based Filtering")
@@ -203,7 +203,7 @@ def main():
                 st.write('''2. Difficulty in Handling Novelty and Serendipity: Content-based filtering struggles with recommending entirely new or novel items that a user may enjoy. Since the recommendations are based on past interactions and content features, the system may find it challenging to introduce users to content outside their established preferences, limiting the potential for serendipitous discovery.''')
 
         with tab2:
-            st.header("Colaborative-Based Filtering")
+            st.header("Collaborative-Based Filtering")
             st.write('''WatchWiz utilizes collaborative filtering, incorporating both user-based and item-based approaches. By analyzing user behavior and preferences, the app recommends content based on similarities with other users or items that share characteristics with those the user has enjoyed. This dual collaborative filtering strategy enhances the accuracy and diversity of personalized recommendations, providing users with a dynamic and engaging content discovery experience.''')
             st.image('resources/imgs/Colab.png',use_column_width=True)
             with st.expander("**Advantages/Disadvantages**"):
