@@ -132,7 +132,11 @@ def collab_model(movie_list,top_n=10):
     print(f'init users {df_init_users}')
 
     # Getting the cosine similarity matrix
-    cosine_sim = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
+    # Pivot ratings_df to create a user-movie rating matrix
+    user_movie_matrix = ratings_df.pivot(index='userId', columns='movieId', values='rating').fillna(0)
+
+    # Calculate cosine similarity
+    cosine_sim = cosine_similarity(user_movie_matrix, user_movie_matrix)
 
     
     print(f'cosine sim {cosine_sim}')
