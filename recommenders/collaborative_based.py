@@ -44,7 +44,7 @@ ratings_df = pd.read_csv('resources/data/ratings.csv')
 ratings_df.drop(['timestamp'], axis=1, inplace=True)
 
 # We make use of an SVD model trained on a subset of the MovieLens dataset.
-model = pickle.load(open('resources/models/SVD.pkl', 'rb'))
+model = pickle.load(open('resources/models/svd.pkl', 'rb'))
 
 def prediction_item(item_id):
     """Map a given favourite movie to users within the
@@ -118,16 +118,16 @@ def collab_model(movie_list, top_n=10):
         Titles of the top-n movie recommendations to the user.
 
     """
-    names = movies_df.copy()
-    names.set_index('movieId', inplace=True)  # Corrected typo here
-    indices = pd.Series(names['title'])
+    movies_df.set_index('movieId', inplace=True)
+    indices = pd.Series(movies_df['title'])
     movie_ids = pred_movies(movie_list)
     
     # Get movie IDs and ratings for top users
-    df_init_users = ratings_df[ratings_df['userId'] == movie_ids[0]]
+    df_init_users = ratings_df[ratings_df['userId']==movie_ids[0]]
     for i in movie_ids[1:]:
-        df_init_users = df_init_users.append(ratings_df[ratings_df['userId'] == i])
-    # Predictions for selected movies
+        df_init_users = df_init_users.append(ratings_df[ratings_df['userId']==i])
+
+    # Predictions for the favorite movies
     for j in movie_list:
         a = pd.DataFrame(prediction_item(j))
         for i in set(df_init_users['userId']):
@@ -138,23 +138,25 @@ def collab_model(movie_list, top_n=10):
     # Remove duplicates
     df_init_users.drop_duplicates(inplace=True)
     
-    # Create pivot table
-    util_matrix = df_init_users.pivot_table(index='userId', columns='movieId', values='rating')  # Corrected typo here
+    # Create util_matrix
+    util_matrix = df_init_users.pivot_table(index='userId', columns='movieId', values='rating') 
     
-    # Fill missing values with 0
+    # Fill NAN with 0
     util_matrix.fillna(0, inplace=True)
+
     # Save util_matrix in sparse matrix format
     util_matrix_sparse = sp.sparse.csr_matrix(util_matrix.values)
     
-    # Calculate cosine similarity using util_matix_sparse
+    # Calculate cosine similarity
     user_similarity = cosine_similarity(util_matrix_sparse.T)
+
     # Save cosimilarity of user_similarity as DataFrame
     user_sim_df = pd.DataFrame(user_similarity, index=util_matrix.columns, columns=util_matrix.columns)
     user_similarity = cosine_similarity(np.array(df_init_users), np.array(df_init_users))
     user_sim_df = pd.DataFrame(user_similarity, index=df_init_users['movieId'].values.astype(int), columns=df_init_users['movieId'].values.astype(int))
     
     # Remove duplicates
-    user_sim_df = user_sim_df.loc[~user_sim_df.index.duplicated(keep='first')]  # Changed here to use .loc
+    user_sim_df = user_sim_df.loc[~user_sim_df.index.duplicated(keep='first')] 
     
     # Transpose similar_users_df
     user_sim_df = user_sim_df.T
@@ -174,7 +176,7 @@ def collab_model(movie_list, top_n=10):
     score_series_2 = pd.Series(rank_2).sort_values(ascending=False)
     score_series_3 = pd.Series(rank_3).sort_values(ascending=False)
     
-    # Appending the names of movies
+    # Appending the movies_df of movies
     listings = score_series_1.append(score_series_2).append(score_series_3).sort_values(ascending=False)
       
     # Choose top 50
@@ -189,6 +191,7 @@ def collab_model(movie_list, top_n=10):
     # Extract titles of recommended movies
     for i in top_indexes[:top_n]:
         recommended_movies.append(list(movies_df[movies_df['movieId'] == i]['title']))
+        
     # Return recommended movies
     recommended_movies = [val for sublist in recommended_movies for val in sublist]
     return recommended_movies
